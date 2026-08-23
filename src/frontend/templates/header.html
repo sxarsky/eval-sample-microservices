@@ -39,6 +39,7 @@
     <link rel="stylesheet" type="text/css" href="{{ $.baseUrl }}/static/styles/cart.css">
     <link rel="stylesheet" type="text/css" href="{{ $.baseUrl }}/static/styles/order.css">
     <link rel="stylesheet" type="text/css" href="{{ $.baseUrl }}/static/styles/bot.css">
+    <link rel="stylesheet" type="text/css" href="{{ $.baseUrl }}/static/styles/zoom.css">
     {{ if $.is_cymbal_brand }}
     <link rel='shortcut icon' type='image/x-icon' href='{{ $.baseUrl }}/static/favicon-cymbal.ico' />
     {{ else }}
@@ -76,6 +77,7 @@
                                     <option value="{{.}}" {{if eq . $.user_currency}}selected="selected"{{end}}>{{.}}</option>
                                     {{end}}
                                 </select>
+    <script src="{{ $.baseUrl }}/static/js/zoom.js"></script>
                             </form>
                             <img src="{{ $.baseUrl }}/static/icons/Hipster_DownArrow.svg" alt="" class="icon arrow" />
                         </div>
