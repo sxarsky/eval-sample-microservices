@@ -1,0 +1,50 @@
+[
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"code\": \"SAVE10\"}",
+    "ResponseBody": "{\"discount\": 10, \"new_total\": \"\"}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/cart/promo",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8080,
+    "Timestamp": "2026-08-23T20:09:33.686Z",
+    "Scheme": "http",
+    "scenarioName": "promo-add-to-cart-apply-promo-integration"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"code\": \"WELCOME20\"}",
+    "ResponseBody": "{\"discount\": 20, \"new_total\": \"\"}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/cart/promo",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8080,
+    "Timestamp": "2026-08-23T20:09:34.686Z",
+    "Scheme": "http",
+    "scenarioName": "promo-add-to-cart-apply-promo-integration"
+  }
+]

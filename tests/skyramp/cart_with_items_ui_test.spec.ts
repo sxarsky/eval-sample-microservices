@@ -29,5 +29,7 @@ test('testUi', async ({ page }) => {
     await page.waitForLoadState('networkidle');
     await expect(page.getByTestId("cart-heading")).toContainText("Cart (1)");
     await expect(page.getByTestId("place-order-btn")).toContainText("Place Order");
+    await expect(page.locator('#promo-code-input')).toHaveValue('');
+    await expect(page.locator('#promo-apply-btn')).toHaveText('Apply');
     expect(errors).toHaveLength(0);
 });
