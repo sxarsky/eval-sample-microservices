@@ -16,6 +16,15 @@
 
 {{ define "product" }}
 {{ template "header" . }}
+{{ if $.breadcrumbs }}
+<nav class="breadcrumb-nav container" aria-label="breadcrumb">
+  <ol>
+    {{ range $.breadcrumbs }}
+    <li>{{ if .url }}<a href="{{ .url }}">{{ .label }}</a>{{ else }}{{ .label }}{{ end }}</li>
+    {{ end }}
+  </ol>
+</nav>
+{{ end }}
 <div {{ with $.platform_css }} class="{{.}}" {{ end }}>
   <span class="platform-flag">
     {{$.platform_name}}

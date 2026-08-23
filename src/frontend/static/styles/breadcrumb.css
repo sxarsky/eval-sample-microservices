@@ -1,0 +1,4 @@
+/* Copyright 2024 Google LLC — Apache 2.0 */
+.breadcrumb-nav { padding: 0.5rem 0; font-size: 0.875rem; }
+.breadcrumb-nav ol { list-style: none; margin: 0; padding: 0; display: flex; gap: 0.25rem; }
+.breadcrumb-nav li + li::before { content: "/"; margin-right: 0.25rem; color: #999; }
