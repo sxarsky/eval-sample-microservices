@@ -27,7 +27,7 @@ test('testUi', async ({ page }) => {
     await page.goto("http://localhost:8080/product/OLJCESPC7Z");
     await page.getByRole("button", { name: "Add To Cart" }).click();
 
-    await expect(page.getByRole('heading', { name: 'Cart (1)' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Shopping Bag (1)' })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Sunglasses' })).toBeVisible();
     await expect(page.getByText('$28.98')).toBeVisible();
 
