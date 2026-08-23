@@ -23,6 +23,7 @@ import (
 	"math/rand"
 	"net"
 	"net/http"
+	"net/url"
 	"os"
 	"strconv"
 	"strings"
@@ -195,6 +196,15 @@ func (fe *frontendServer) productHandler(w http.ResponseWriter, r *http.Request)
 		}
 	}
 
+	// Record the category the user navigated from so the cart page can show a
+	// "Back to Shopping" breadcrumb link.
+	if cat := r.URL.Query().Get("category"); cat != "" {
+		http.SetCookie(w, &http.Cookie{Name: "last_category", Value: cat, MaxAge: 3600, Path: "/"})
+	}
+	productBreadcrumbs := []map[string]string{
+		{"label": "Home", "url": baseUrl + "/"},
+		{"label": p.GetName(), "url": ""},
+	}
 	if err := templates.ExecuteTemplate(w, "product", injectCommonTemplateData(r, map[string]interface{}{
 		"ad":              fe.chooseAd(r.Context(), p.Categories, log),
 		"show_currency":   true,
@@ -203,6 +213,7 @@ func (fe *frontendServer) productHandler(w http.ResponseWriter, r *http.Request)
 		"recommendations": recommendations,
 		"cart_size":       cartSize(cart),
 		"packagingInfo":   packagingInfo,
+		"breadcrumbs":     productBreadcrumbs,
 	})); err != nil {
 		log.Println(err)
 	}
@@ -303,6 +314,10 @@ func (fe *frontendServer) viewCartHandler(w http.ResponseWriter, r *http.Request
 	totalPrice = money.Must(money.Sum(totalPrice, *shippingCost))
 	year := time.Now().Year()
 
+	cartBreadcrumbs := []map[string]string{
+		{"label": "Home", "url": backToShoppingURL(r)},
+		{"label": "Cart", "url": ""},
+	}
 	if err := templates.ExecuteTemplate(w, "cart", injectCommonTemplateData(r, map[string]interface{}{
 		"currencies":       currencies,
 		"recommendations":  recommendations,
@@ -312,6 +327,7 @@ func (fe *frontendServer) viewCartHandler(w http.ResponseWriter, r *http.Request
 		"total_cost":       totalPrice,
 		"items":            items,
 		"expiration_years": []int{year, year + 1, year + 2, year + 3, year + 4},
+		"breadcrumbs":      cartBreadcrumbs,
 	})); err != nil {
 		log.Println(err)
 	}
@@ -632,4 +648,16 @@ func stringinSlice(slice []string, val string) bool {
 		}
 	}
 	return false
+}
+
+func lastCategory(r *http.Request) string {
+	c, err := r.Cookie("last_category")
+	if err != nil { return "" }
+	return c.Value
+}
+
+func backToShoppingURL(r *http.Request) string {
+	cat := lastCategory(r)
+	if cat == "" { return baseUrl + "/" }
+	return baseUrl + "/?category=" + url.QueryEscape(cat)
 }
