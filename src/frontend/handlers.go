@@ -248,6 +248,24 @@ func (fe *frontendServer) emptyCartHandler(w http.ResponseWriter, r *http.Reques
 	w.WriteHeader(http.StatusFound)
 }
 
+func (fe *frontendServer) promoHandler(w http.ResponseWriter, r *http.Request) {
+	log := r.Context().Value(ctxKeyLog{}).(logrus.FieldLogger)
+	code := r.FormValue("code")
+	log.WithField("code", code).Debug("apply promo code")
+
+	// Validate promo code — only SAVE10 and WELCOME20 are valid
+	validCodes := map[string]int{"SAVE10": 10, "WELCOME20": 20}
+	discount, ok := validCodes[code]
+	if !ok {
+		http.Error(w, "invalid promo code", http.StatusBadRequest)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	fmt.Fprintf(w, `{"discount":%d,"new_total":""}`, discount)
+}
+
 func (fe *frontendServer) viewCartHandler(w http.ResponseWriter, r *http.Request) {
 	log := r.Context().Value(ctxKeyLog{}).(logrus.FieldLogger)
 	log.Debug("view user cart")

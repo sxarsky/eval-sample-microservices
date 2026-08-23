@@ -92,7 +92,17 @@
 
                     <div class="row cart-summary-total-row">
                         <div class="col pl-md-0">Total</div>
-                        <div class="col pr-md-0 text-right">{{ renderMoney .total_cost }}</div>
+                        <div class="col pr-md-0 text-right" id="cart-total">{{ renderMoney .total_cost }}</div>
+                    </div>
+
+                    <div class="row cart-summary-promo-row" id="promo-row">
+                        <div class="col pl-md-0">
+                            <div class="promo-code-section">
+                                <input type="text" id="promo-code-input" class="promo-code-input" placeholder="Promo code">
+                                <button type="button" id="promo-apply-btn" class="cymbal-button-secondary">Apply</button>
+                            </div>
+                            <div id="promo-message" class="promo-message" style="display:none;"></div>
+                        </div>
                     </div>
 
                 </div>
