@@ -1,0 +1,119 @@
+[
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{}",
+    "ResponseBody": "{}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/cart",
+    "QueryParams": {
+      "product_id": [
+        "OLJCESPC7Z"
+      ],
+      "quantity": [
+        "1"
+      ]
+    },
+    "StatusCode": 302,
+    "Port": 8080,
+    "Timestamp": "2026-08-23T20:13:02.747Z",
+    "Scheme": "http",
+    "scenarioName": "cart-update-multiple-items-one-changed"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{}",
+    "ResponseBody": "{}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/cart",
+    "QueryParams": {
+      "product_id": [
+        "66VCHSJNUP"
+      ],
+      "quantity": [
+        "1"
+      ]
+    },
+    "StatusCode": 302,
+    "Port": 8080,
+    "Timestamp": "2026-08-23T20:13:03.747Z",
+    "Scheme": "http",
+    "scenarioName": "cart-update-multiple-items-one-changed"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{}",
+    "ResponseBody": "{}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/cart/update",
+    "QueryParams": {
+      "product_id": [
+        "OLJCESPC7Z"
+      ],
+      "quantity": [
+        "3"
+      ]
+    },
+    "StatusCode": 302,
+    "Port": 8080,
+    "Timestamp": "2026-08-23T20:13:04.747Z",
+    "Scheme": "http",
+    "scenarioName": "cart-update-multiple-items-one-changed"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "GET",
+    "Path": "/cart",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8080,
+    "Timestamp": "2026-08-23T20:13:05.747Z",
+    "Scheme": "http",
+    "scenarioName": "cart-update-multiple-items-one-changed"
+  }
+]
