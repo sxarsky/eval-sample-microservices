@@ -26,8 +26,8 @@
 }
 
 .cart-sections a.cymbal-button-primary:hover {
-    text-decoration: none;
     color: white;
+    text-decoration: none;
 }
 
 /* Empty Cart Section */
@@ -39,7 +39,7 @@
 }
 
 .empty-cart-section a {
-    display: inline-block; /* So margin-top works. */
+    display: inline-block;
     margin-top: 32px;
 }
 
@@ -48,7 +48,7 @@
     text-decoration: none;
 }
 
-/*  Cart Summary Section */
+/* Cart Summary Section */
 
 .cart-summary-empty-cart-button {
     margin-right: 10px;
@@ -76,16 +76,14 @@
     font-weight: normal;
 }
 
-/* Stick item quantity and cost to the bottom (for wider screens). */
 @media (min-width: 768px) {
     .cart-summary-item-row .row:last-child {
         position: absolute;
-        bottom: 0px;
+        bottom: 0;
         width: 100%;
     }
 }
 
-/* Item cost (price). */
 .cart-summary-item-row .row:last-child strong {
     font-weight: 500;
 }
@@ -104,7 +102,6 @@
     margin-top: 36px;
 }
 
-/* "Place Order" button */
 .cart-checkout-form .cymbal-button-primary {
     margin-top: 36px;
 }
