@@ -1,10 +1,24 @@
-# Skyramp workspace config for Online Boutique TestBot evaluation.
-# Points TestBot at the frontend HTTP server for endpoint discovery and testing.
-# The frontend serves HTML pages (server-rendered Go templates) and a small
-# number of JSON/redirect endpoints. There is no REST API — this repo is
-# evaluated for UI test generation only.
-
-api:
-  baseUrl: http://localhost:8080
-
-testDirectory: tests/skyramp
+# Skyramp Workspace Configuration for Online Boutique eval.
+# Copied into the cloned repo by eval-testbot.sh before the agent runs.
+# The frontend is a Go server that renders HTML — no REST/JSON API and no
+# OpenAPI spec.  All testable behaviour is via the browser (Playwright).
+workspace:
+  repoName: sxarsky/microservices-demo-testb
+  repoUrl: git@github.com:sxarsky/microservices-demo-testb.git
+metadata:
+  schemaVersion: v1
+  mcpVersion: next
+  executorVersion: v1.0.0
+  createdAt: "2026-01-01T00:00:00Z"
+  updatedAt: "2026-01-01T00:00:00Z"
+services:
+  - serviceName: online-boutique-frontend
+    language: javascript
+    framework: playwright
+    testDirectory: tests/skyramp
+    api:
+      baseUrl: http://localhost:8080
+      authType: none
+      authHeader: ""
+    runtimeDetails:
+      runtime: local

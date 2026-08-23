@@ -1,0 +1,156 @@
+# Eval compose for sxarsky/microservices-demo-testb (Google Online Boutique).
+#
+# Backend services use pre-built v0.10.5 images from Google's Artifact Registry
+# (no local build needed). Only the frontend is built from source so PR changes
+# are picked up. Redis is included for the cart service.
+#
+# REPO_PATH is exported by start-services.sh before this file is evaluated.
+# Frontend accessible at: http://localhost:8080
+
+services:
+
+  # ─── Frontend (built from source — the SUT) ────────────────────────────────
+
+  frontend:
+    build:
+      context: ${REPO_PATH}/src/frontend
+      dockerfile: ${REPO_PATH}/Dockerfile.eval
+    ports:
+      - "8080:8080"
+    environment:
+      PORT: "8080"
+      PRODUCT_CATALOG_SERVICE_ADDR: "productcatalogservice:3550"
+      CURRENCY_SERVICE_ADDR: "currencyservice:7000"
+      CART_SERVICE_ADDR: "cartservice:7070"
+      RECOMMENDATION_SERVICE_ADDR: "recommendationservice:8080"
+      SHIPPING_SERVICE_ADDR: "shippingservice:50051"
+      CHECKOUT_SERVICE_ADDR: "checkoutservice:5050"
+      AD_SERVICE_ADDR: "adservice:9555"
+      SHOPPING_ASSISTANT_SERVICE_ADDR: "localhost:0"
+      DISABLE_PROFILER: "1"
+      DISABLE_TRACING: "1"
+      CYMBAL_BRANDING: "false"
+    depends_on:
+      cartservice:
+        condition: service_started
+      productcatalogservice:
+        condition: service_started
+      currencyservice:
+        condition: service_started
+      checkoutservice:
+        condition: service_started
+      shippingservice:
+        condition: service_started
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8080/_healthz"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    networks:
+      - boutique
+
+  # ─── Backend services (pre-built images) ───────────────────────────────────
+
+  redis-cart:
+    image: redis:alpine
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - boutique
+
+  cartservice:
+    image: "us-central1-docker.pkg.dev/google-samples/microservices-demo/cartservice:v0.10.5"
+    environment:
+      REDIS_ADDR: "redis-cart:6379"
+    depends_on:
+      redis-cart:
+        condition: service_healthy
+    networks:
+      - boutique
+
+  productcatalogservice:
+    image: "us-central1-docker.pkg.dev/google-samples/microservices-demo/productcatalogservice:v0.10.5"
+    environment:
+      PORT: "3550"
+      DISABLE_PROFILER: "1"
+    networks:
+      - boutique
+
+  currencyservice:
+    image: "us-central1-docker.pkg.dev/google-samples/microservices-demo/currencyservice:v0.10.5"
+    environment:
+      PORT: "7000"
+      DISABLE_PROFILER: "1"
+    networks:
+      - boutique
+
+  shippingservice:
+    image: "us-central1-docker.pkg.dev/google-samples/microservices-demo/shippingservice:v0.10.5"
+    environment:
+      PORT: "50051"
+      DISABLE_PROFILER: "1"
+    networks:
+      - boutique
+
+  paymentservice:
+    image: "us-central1-docker.pkg.dev/google-samples/microservices-demo/paymentservice:v0.10.5"
+    environment:
+      PORT: "50051"
+      DISABLE_PROFILER: "1"
+    networks:
+      - boutique
+
+  emailservice:
+    image: "us-central1-docker.pkg.dev/google-samples/microservices-demo/emailservice:v0.10.5"
+    environment:
+      PORT: "5000"
+      DISABLE_PROFILER: "1"
+    networks:
+      - boutique
+
+  recommendationservice:
+    image: "us-central1-docker.pkg.dev/google-samples/microservices-demo/recommendationservice:v0.10.5"
+    environment:
+      PORT: "8080"
+      PRODUCT_CATALOG_SERVICE_ADDR: "productcatalogservice:3550"
+      DISABLE_PROFILER: "1"
+    depends_on:
+      - productcatalogservice
+    networks:
+      - boutique
+
+  checkoutservice:
+    image: "us-central1-docker.pkg.dev/google-samples/microservices-demo/checkoutservice:v0.10.5"
+    environment:
+      PORT: "5050"
+      PRODUCT_CATALOG_SERVICE_ADDR: "productcatalogservice:3550"
+      SHIPPING_SERVICE_ADDR: "shippingservice:50051"
+      PAYMENT_SERVICE_ADDR: "paymentservice:50051"
+      EMAIL_SERVICE_ADDR: "emailservice:5000"
+      CURRENCY_SERVICE_ADDR: "currencyservice:7000"
+      CART_SERVICE_ADDR: "cartservice:7070"
+    depends_on:
+      - productcatalogservice
+      - currencyservice
+      - cartservice
+      - shippingservice
+      - paymentservice
+      - emailservice
+    networks:
+      - boutique
+
+  adservice:
+    image: "us-central1-docker.pkg.dev/google-samples/microservices-demo/adservice:v0.10.5"
+    environment:
+      PORT: "9555"
+      DISABLE_PROFILER: "1"
+    networks:
+      - boutique
+
+networks:
+  boutique:
+    driver: bridge
