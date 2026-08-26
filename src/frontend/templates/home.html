@@ -17,6 +17,32 @@
 {{ define "home" }}
 
 {{ template "header" . }}
+
+{{ if $.products }}
+<section class="container featured-carousel" aria-label="Featured products">
+  <div class="carousel-track">
+    {{ range $i, $fp := $.products }}
+    <div class="carousel-slide{{ if eq $i 0 }} carousel-slide--active{{ end }}">
+      <a href="{{ $.baseUrl }}/product/{{ $fp.Item.Id }}">
+        <img loading="lazy" src="{{ $.baseUrl }}{{ $fp.Item.Picture }}" alt="{{ $fp.Item.Name }}" class="img-fluid">
+        <div class="carousel-caption">
+          <span class="carousel-product-name">{{ $fp.Item.Name }}</span>
+          <span class="carousel-product-price">{{ renderMoney $fp.Price }}</span>
+        </div>
+      </a>
+    </div>
+    {{ end }}
+  </div>
+  <div class="carousel-controls">
+    <button class="carousel-prev" aria-label="Previous slide">&#8249;</button>
+    {{ range $i, $fp := $.products }}
+    <button class="carousel-dot{{ if eq $i 0 }} carousel-dot--active{{ end }}" aria-label="Go to slide {{ add $i 1 }}" data-index="{{ $i }}"></button>
+    {{ end }}
+    <button class="carousel-next" aria-label="Next slide">&#8250;</button>
+  </div>
+</section>
+{{ end }}
+
 <div {{ with $.platform_css }} class="{{.}}" {{ end }}>
   <span class="platform-flag">
     {{$.platform_name}}
