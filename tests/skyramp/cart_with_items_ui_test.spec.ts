@@ -29,5 +29,9 @@ test('testUi', async ({ page }) => {
     await page.waitForLoadState('networkidle');
     await expect(page.getByTestId("cart-heading")).toContainText("Cart (1)");
     await expect(page.getByTestId("place-order-btn")).toContainText("Place Order");
+    await expect(page.getByRole('heading', { name: 'Order confirmation email preview' })).toBeVisible();
+    await expect(page.locator('#email-preview-panel .preview-currency')).toHaveText('USD');
+    await expect(page.locator('#email-preview-panel .preview-items')).toContainText('Sunglasses');
+    await expect(page.locator('#email-preview-panel .preview-total')).toHaveText('$28.98');
     expect(errors).toHaveLength(0);
 });
