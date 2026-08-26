@@ -28,6 +28,10 @@ test('testUi', async ({ page }) => {
     await page.getByRole("button", { name: "Add To Cart" }).click();
     await page.waitForLoadState('networkidle');
     await expect(page.getByTestId("cart-heading")).toContainText("Cart (1)");
-    await expect(page.getByTestId("place-order-btn")).toContainText("Place Order");
+    // PR replaced data-testid="place-order-btn" with id="place-order-btn" on the Place Order button.
+    // The button now lives inside the hidden #checkout-step-3 panel, so assert presence/text, not visibility.
+    await expect(page.locator('#place-order-btn')).toContainText("Place Order");
+    // Multi-step checkout renders with the Shipping step active on load.
+    await expect(page.getByRole('button', { name: 'Next: Payment \u2192' })).toBeVisible();
     expect(errors).toHaveLength(0);
 });

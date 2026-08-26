@@ -29,7 +29,9 @@ test('testUi', async ({ page }) => {
 
     await expect(page.getByRole('heading', { name: 'Cart (1)' })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Sunglasses' })).toBeVisible();
-    await expect(page.getByText('$28.98')).toBeVisible();
+    // PR's Review step adds a second '$28.98' render (<p>Total: $28.98</p>); exact match keeps this
+    // locator pinned to the visible cart-summary total and avoids a strict-mode violation.
+    await expect(page.getByText('$28.98', { exact: true })).toBeVisible();
 
     expect(errors).toHaveLength(0);
 });
