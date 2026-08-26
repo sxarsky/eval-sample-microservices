@@ -1,0 +1,88 @@
+[
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{}",
+    "ResponseBody": "{}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/cart",
+    "QueryParams": {
+      "product_id": [
+        "OLJCESPC7Z"
+      ],
+      "quantity": [
+        "2"
+      ]
+    },
+    "StatusCode": 302,
+    "Port": 8080,
+    "Timestamp": "2026-08-26T18:51:44.663Z",
+    "Scheme": "http",
+    "scenarioName": "cart_update_unknown_product_preserves_cart"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{}",
+    "ResponseBody": "{}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/cart/update",
+    "QueryParams": {
+      "product_id": [
+        "66VCHSJNUP"
+      ],
+      "quantity": [
+        "4"
+      ]
+    },
+    "StatusCode": 302,
+    "Port": 8080,
+    "Timestamp": "2026-08-26T18:51:45.663Z",
+    "Scheme": "http",
+    "scenarioName": "cart_update_unknown_product_preserves_cart"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "GET",
+    "Path": "/",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8080,
+    "Timestamp": "2026-08-26T18:51:46.663Z",
+    "Scheme": "http",
+    "scenarioName": "cart_update_unknown_product_preserves_cart"
+  }
+]
