@@ -30,5 +30,6 @@ test('testUi', async ({ page }) => {
 
     await expect(page.getByTestId('empty-cart')).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Your shopping cart is empty!' })).toBeVisible();
+    await expect(page.locator('#cart-count-badge')).toBeHidden();
     expect(errors).toHaveLength(0);
 });
