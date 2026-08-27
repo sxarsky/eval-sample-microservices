@@ -27,6 +27,8 @@ test('testUi', async ({ page }) => {
     await page.goto("http://localhost:8080");
     await page.goto("http://localhost:8080/cart");
     await page.waitForLoadState('networkidle');
+    await expect(page.locator('#cart-count-badge')).toBeHidden();
+    await expect(page.getByRole('link', { name: 'Cart icon', exact: true })).toBeVisible();
 
     await expect(page.getByTestId('empty-cart')).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Your shopping cart is empty!' })).toBeVisible();
