@@ -25,8 +25,8 @@ test('testUi', async ({ page }) => {
     page.on('pageerror', (err) => errors.push(err.message));
 
     await page.goto("http://localhost:8080/product/OLJCESPC7Z");
-    // Click the first recommendation link (index 2 skips logo and cart header links)
-    await page.getByRole("link").nth(2).click();
+    // Click the first recommendation link, scoped to the recommendations grid so header changes cannot shift the index
+    await page.locator('div.col-md-3 a[href^="/product/"]').first().click();
 
     await expect(page.getByRole('heading', { level: 2 }).first()).toBeVisible();
     await expect(page.getByRole('button', { name: 'Add To Cart' })).toBeVisible();
