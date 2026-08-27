@@ -1,0 +1,18 @@
+/* Copyright 2024 Google LLC — Apache 2.0 */
+.cart-link { position: relative; }
+.cart-count-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 9px;
+  background: #c62828;
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0 4px;
+  position: absolute;
+  top: -4px;
+  right: -6px;
+}
