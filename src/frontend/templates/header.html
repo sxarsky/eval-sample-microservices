@@ -39,6 +39,7 @@
     <link rel="stylesheet" type="text/css" href="{{ $.baseUrl }}/static/styles/cart.css">
     <link rel="stylesheet" type="text/css" href="{{ $.baseUrl }}/static/styles/order.css">
     <link rel="stylesheet" type="text/css" href="{{ $.baseUrl }}/static/styles/bot.css">
+    <link rel="stylesheet" type="text/css" href="{{ $.baseUrl }}/static/styles/header.css">
     {{ if $.is_cymbal_brand }}
     <link rel='shortcut icon' type='image/x-icon' href='{{ $.baseUrl }}/static/favicon-cymbal.ico' />
     {{ else }}
@@ -76,6 +77,7 @@
                                     <option value="{{.}}" {{if eq . $.user_currency}}selected="selected"{{end}}>{{.}}</option>
                                     {{end}}
                                 </select>
+                                <script src="{{ $.baseUrl }}/static/js/cart-badge.js"></script>
                             </form>
                             <img src="{{ $.baseUrl }}/static/icons/Hipster_DownArrow.svg" alt="" class="icon arrow" />
                         </div>
@@ -90,9 +92,7 @@
 
                     <a href="{{ $.baseUrl }}/cart" class="cart-link">
                         <img src="{{ $.baseUrl }}/static/icons/Hipster_CartIcon.svg" alt="Cart icon" class="logo" title="Cart" />
-                        {{ if $.cart_size }}
-                        <span class="cart-size-circle">{{$.cart_size}}</span>
-                        {{ end }}
+                        <span id="cart-count-badge" class="cart-count-badge"{{ if not $.cart_size }} hidden{{ end }}>{{ if $.cart_size }}{{$.cart_size}}{{ end }}</span>
                     </a>
                 </div>
             </div>
