@@ -29,5 +29,6 @@ test('testUi', async ({ page }) => {
     await page.waitForLoadState('networkidle');
     await expect(page.getByTestId("cart-heading")).toContainText("Cart (1)");
     await expect(page.getByTestId("place-order-btn")).toContainText("Place Order");
+    await expect(page.locator('#email-preview-panel')).toContainText('Order confirmation email preview');
     expect(errors).toHaveLength(0);
 });

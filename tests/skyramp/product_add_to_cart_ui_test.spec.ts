@@ -29,7 +29,8 @@ test('testUi', async ({ page }) => {
 
     await expect(page.getByRole('heading', { name: 'Cart (1)' })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Sunglasses' })).toBeVisible();
-    await expect(page.getByText('$28.98')).toBeVisible();
+    await expect(page.locator('div.col.pr-md-0.text-right').getByText('$28.98')).toBeVisible();
+    await expect(page.locator('#email-preview-panel')).toContainText('Order confirmation email preview');
 
     expect(errors).toHaveLength(0);
 });
