@@ -27,7 +27,7 @@ test('testUi', async ({ page }) => {
     await page.goto("http://localhost:8080/product/OLJCESPC7Z");
     await page.getByRole("button", { name: "Add To Cart" }).click();
     await page.waitForLoadState('networkidle');
-    await expect(page.getByTestId("cart-heading")).toContainText("Cart (1)");
-    await expect(page.getByTestId("place-order-btn")).toContainText("Place Order");
+    await expect(page.getByTestId("cart-heading")).toHaveText("Cart (1)");
+    await expect(page.locator("#place-order-btn")).toContainText("Place Order");
     expect(errors).toHaveLength(0);
 });
