@@ -50,6 +50,7 @@ var (
 				Funcs(template.FuncMap{
 			"renderMoney":        renderMoney,
 			"renderCurrencyLogo": renderCurrencyLogo,
+			"add": func(a, b int) int { return a + b },
 		}).ParseGlob("templates/*.html"))
 	plat platformDetails
 )
