@@ -28,6 +28,7 @@ test('testUi', async ({ page }) => {
     await page.getByRole("button", { name: "Add To Cart" }).click();
     await page.waitForLoadState('networkidle');
     await expect(page.getByTestId("cart-heading")).toContainText("Cart (1)");
-    await expect(page.getByTestId("place-order-btn")).toContainText("Place Order");
+    await expect(page.getByRole('button', { name: 'Next: Payment' })).toBeVisible();
+    await expect(page.locator("#place-order-btn")).toContainText("Place Order");
     expect(errors).toHaveLength(0);
 });
