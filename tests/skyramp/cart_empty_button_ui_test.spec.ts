@@ -28,9 +28,11 @@ test('testUi', async ({ page }) => {
     await page.getByRole("button", { name: "Add To Cart" }).click();
     await page.waitForLoadState('networkidle');
     await expect(page.getByTestId("cart-heading")).toContainText("Cart (1)");
+    await expect(page.locator('#cart-count-badge')).toHaveText('1');
     await page.getByTestId("empty-cart-btn").click();
     await page.waitForLoadState('networkidle');
     await page.goto("http://localhost:8080/cart");
     await expect(page.getByTestId("empty-cart")).toBeVisible();
+    await expect(page.locator('#cart-count-badge')).toBeHidden();
     expect(errors).toHaveLength(0);
 });
