@@ -29,7 +29,9 @@ test('testUi', async ({ page }) => {
 
     await expect(page.getByRole('heading', { name: 'Cart (1)' })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Sunglasses' })).toBeVisible();
-    await expect(page.getByText('$28.98')).toBeVisible();
+    await expect(page.locator('.cart-summary-total-row .text-right')).toHaveText('$28.98');
+    await expect(page.locator('.cart-summary-item-row')).toHaveCount(1);
+    await expect(page.locator('.cart-size-circle')).toHaveText('1');
 
     expect(errors).toHaveLength(0);
 });
