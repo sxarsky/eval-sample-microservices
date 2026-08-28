@@ -50,6 +50,9 @@ var (
 				Funcs(template.FuncMap{
 			"renderMoney":        renderMoney,
 			"renderCurrencyLogo": renderCurrencyLogo,
+			"add":                func(a, b int) int { return a + b },
+			"mul":                func(a, b int) int { return a * b },
+			"div":                func(a, b int) int { return a / b },
 		}).ParseGlob("templates/*.html"))
 	plat platformDetails
 )
@@ -245,6 +248,41 @@ func (fe *frontendServer) emptyCartHandler(w http.ResponseWriter, r *http.Reques
 		return
 	}
 	w.Header().Set("location", baseUrl + "/")
+	w.WriteHeader(http.StatusFound)
+}
+
+func (fe *frontendServer) updateCartHandler(w http.ResponseWriter, r *http.Request) {
+	log := r.Context().Value(ctxKeyLog{}).(logrus.FieldLogger)
+	productID := r.FormValue("product_id")
+	qtyStr := r.FormValue("quantity")
+	qty, err := strconv.Atoi(qtyStr)
+	if err != nil || qty < 1 || qty > 10 {
+		renderHTTPError(log, r, w, errors.New("invalid quantity"), http.StatusBadRequest)
+		return
+	}
+	sid := sessionID(r)
+	cart, err := fe.getCart(r.Context(), sid)
+	if err != nil {
+		renderHTTPError(log, r, w, errors.Wrap(err, "could not retrieve cart"), http.StatusInternalServerError)
+		return
+	}
+	if err := fe.emptyCart(r.Context(), sid); err != nil {
+		renderHTTPError(log, r, w, errors.Wrap(err, "failed to empty cart"), http.StatusInternalServerError)
+		return
+	}
+	for _, item := range cart {
+		newQty := int(item.GetQuantity())
+		if item.GetProductId() == productID {
+			newQty = qty
+		}
+		if newQty > 0 {
+			if err := fe.insertCart(r.Context(), sid, item.GetProductId(), int32(newQty)); err != nil {
+				renderHTTPError(log, r, w, errors.Wrap(err, "failed to update cart"), http.StatusInternalServerError)
+				return
+			}
+		}
+	}
+	w.Header().Set("location", baseUrl+"/cart")
 	w.WriteHeader(http.StatusFound)
 }
 
