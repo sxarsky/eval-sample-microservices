@@ -13,6 +13,7 @@ import { expect, newSkyrampPlaywrightPage } from '@skyramp/skyramp';
 
 const pageTimeout = 15000;
 
+// assertions reviewed: enhance_assertions targets sendRequest/response-body assertions; this is a pure browser spec with no API response object, so no getValue() assertion applies. Maintenance scoped the total locator with { exact: true } because the new Review step renders total_cost a second time, which made the bare getByText('$28.98') ambiguous.
 test('testUi', async ({ page }) => {
     test.setTimeout(60000);
 
@@ -29,7 +30,7 @@ test('testUi', async ({ page }) => {
 
     await expect(page.getByRole('heading', { name: 'Cart (1)' })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Sunglasses' })).toBeVisible();
-    await expect(page.getByText('$28.98')).toBeVisible();
+    await expect(page.getByText('$28.98', { exact: true })).toBeVisible();
 
     expect(errors).toHaveLength(0);
 });
