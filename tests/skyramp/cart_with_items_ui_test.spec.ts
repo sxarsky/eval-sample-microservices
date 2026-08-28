@@ -29,5 +29,10 @@ test('testUi', async ({ page }) => {
     await page.waitForLoadState('networkidle');
     await expect(page.getByTestId("cart-heading")).toContainText("Cart (1)");
     await expect(page.getByTestId("place-order-btn")).toContainText("Place Order");
+    await expect(page.locator('#email-preview-panel')).toBeVisible();
+    await expect(page.locator('#email-preview-panel .preview-items')).toContainText('Sunglasses');
+    await expect(page.locator('#email-preview-panel .preview-total')).toHaveText('$28.98');
+    await expect(page.locator('#email-preview-panel .preview-items > div')).toHaveCount(1);
+    await expect(page.locator('.cart-summary-item-row')).toHaveCount(1);
     expect(errors).toHaveLength(0);
 });
