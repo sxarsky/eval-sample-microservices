@@ -101,6 +101,22 @@
 
                     <form class="cart-checkout-form" action="{{ $.baseUrl }}/cart/checkout" method="POST">
 
+                        <aside id="email-preview-panel" class="email-preview-panel">
+                            <h4>Order confirmation email preview</h4>
+                            <dl>
+                                <dt>To:</dt><dd class="preview-to">someone@example.com</dd>
+                                <dt>Ship to:</dt><dd class="preview-address">1600 Amphitheatre Parkway, Mountain View, CA, 94043, United States</dd>
+                                <dt>Currency:</dt><dd class="preview-currency">{{ $.user_currency }}</dd>
+                                <dt>Items:</dt>
+                                <dd class="preview-items">
+                                    {{ range $.items }}
+                                    <div>{{ .Item.Name }} &times; {{ .Quantity }} &mdash; {{ renderMoney .Price }}</div>
+                                    {{ end }}
+                                </dd>
+                                <dt>Total:</dt><dd class="preview-total">{{ renderMoney .total_cost }}</dd>
+                            </dl>
+                        </aside>
+
                         <div class="row">
                             <div class="col">
                                 <h3>Shipping Address</h3>
